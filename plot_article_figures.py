@@ -26,8 +26,7 @@ matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
 
     
-#A = fs.AllShearersFeatures(shearers=None,dir_path='D:\Data\saved_features_with_time')
-A = fs.AllShearersFeatures(shearers=None,dir_path='D:\\Data\\new_saved_features_11_subjects')
+A = fs.AllShearersFeatures(shearers=None,dir_path='new_saved_features_11_subjects')
 
 #Need a feature list
 feature_list = [#'env_quantile_01_L3 Erector Spinae RIGHT',\
