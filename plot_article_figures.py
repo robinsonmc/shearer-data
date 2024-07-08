@@ -17,14 +17,9 @@ except:
 import feature_set as fs
 import pandas as pd
 import seaborn as sns
-from statsmodels.compat import lzip
-from scipy import stats
 import matplotlib.pyplot as plt
 import numpy as np
-import statsmodels.api as sm
 import statsmodels.formula.api as smf
-import statsmodels.stats.api as sms
-from statsmodels.tools.sm_exceptions import ConvergenceWarning
 
 import matplotlib
 params = {'backend': 'Agg',
