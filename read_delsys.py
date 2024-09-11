@@ -81,7 +81,7 @@ if __name__ == '__main__':
     from time import time
     start = time()
     #Roughly 3 minutes for 5GB files
-    shearer_data_test= read_delsys_csv("D:\Data\Shearer 1 - Week 1\Tuesday\s1_week1_tuesday_run3\s1_week1_tuesday_run3")
-    #shearer_data_monday= read_delsys_csv("C:\\Users\\mrobinson2\\Documents\\Data Analysis\\Test_exports\\Comparison\\MONDAY_Shearing_Run_4.csv")
+    shearer_data_test= read_delsys_csv("D:\Data_for_up\Week 4\s11_week4_friday\s11_week4_friday_run1\\s11_week4_friday_run1.csv")
+    shearer_data_monday= read_delsys_csv("D:\Data_for_up\Week 1\Tuesday\s1_week1_tuesday_run1_part1\\s1_week1_tuesday_run1_part1.csv")
     end = time()
     print('The code ran in {0:0.3f} seconds'.format(end-start))

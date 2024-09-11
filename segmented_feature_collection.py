@@ -77,6 +77,15 @@ class SegmentedFeatureCollection:
     This will enable a vast reduction in storage as there will be a set of
     features per sheep ~200 for day rather than 2148Hz + 60Hz + 100Hz data
     for 8 hours
+    
+    Attributes:
+    .shearer
+        - int: shearer number
+    .day
+        - str: day of week
+    .features
+        - List of dataframes: max length 4 (one per run)
+        - Within list, dataframe: columns are features, rows are sheep
     '''
     
     
@@ -123,6 +132,8 @@ class SegmentedFeatureCollection:
         for i in range(1,max_run+1):
             segmented_data = SegmentedDataFile(full_metadata_list,\
                                         shearer=shearer, run=i, day=day)
+                
+            print(segmented_data)
         
             #MoCap
             mocap_features = {}
@@ -146,7 +157,6 @@ class SegmentedFeatureCollection:
                         [function(x) for x in segmented_data.Summary.envelope_all]
             
             #Custom - combined: use function(x) for x in segmented_data.Summary...
-            #TODO
             mocap_env_features = {}
             for function in tqdm(mocap_env_functions):
                 tqdm._instances.clear()
@@ -179,7 +189,6 @@ class SegmentedFeatureCollection:
                         [function(x) for x in segmented_data.Summary.pre_envelope_all]
             
             #Custom - combined: use function(x) for x in segmented_data.Summary...
-            #TODO
             mocap_env_shift_features = {}
             for function in tqdm(mocap_env_shift_functions):
                 tqdm._instances.clear()
@@ -338,7 +347,7 @@ if __name__ == '__main__':
                                       spectral_ind_ratio,get_datetime
                            
     mocap_feature_list = [#apply_to_column(sample_entropy,'Pelvis_T8_z'),\
-                          apply_to_rel_vec(rmsquare,'Pelvis','T8','angvel','Pelvis_T8','z')]
+                          #apply_to_rel_vec(rmsquare,'Pelvis','T8','angvel','Pelvis_T8','z')]
                           #apply_to_two_columns(two_col_ratio,'Pelvis_T8_z','jRightHip_z'),\
                           #apply_to_column(rmsquare,'Pelvis_T8_y'),\
                           #apply_DRP(DRP,'Pelvis_T8_z','jRightHip_z',1),\
@@ -352,7 +361,7 @@ if __name__ == '__main__':
 #                          apply_to_column(rmsquare,'Pelvis_T8_y'),\
 #                          apply_to_column(col_std,'Pelvis_T8_z'),\
 #                          apply_to_column(col_average,'jRightHip_z'),\
-#                          apply_to_column(col_average,'jRightKnee_z'),\
+                          apply_to_column(col_average,'jRightKnee_z')]
 #                          apply_to_column(col_average,'jRightT4Shoulder_z'),\
 #                          apply_to_column(col_average,'T8_Head_z'),\
 #                          gff.time_taken_s]
@@ -402,7 +411,7 @@ if __name__ == '__main__':
 #                        apply_to_column(mean_freq_dataframe,'Biceps Femoris LEFT: EMG.A 15'),\
 #                        apply_to_column(mean_freq_dataframe,'Biceps Femoris RIGHT: EMG.A 16')]
     
-    mocap_env_feature_list = [apply_twocol_twodf(two_df_mult,'Pelvis_T8_z','L3 Erector Spinae LEFT')]
+    mocap_env_feature_list = []#apply_twocol_twodf(two_df_mult,'Pelvis_T8_z','L3 Erector Spinae LEFT')]
     
     emg_shift_feature_list = [apply_spec_ind(spectral_ind_ratio,'L1 Erector Spinae LEFT',1,0)]
                         #apply_spec_ind(spectral_ind_ratio,'L1 Erector Spinae LEFT',-1,2),\
@@ -411,7 +420,7 @@ if __name__ == '__main__':
                         #apply_spec_ind(spectral_ind_ratio,'L1 Erector Spinae LEFT',-1,5),\
                         #apply_to_column(mean_freq_dataframe,'L1 Erector Spinae RIGHT'),\
                         #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',1,0),\
-                        #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',-1,2),\
+                        #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',-1,2)]
                         #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',-1,3),\
                         #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',-1,4),\
                         #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',-1,5)]
@@ -421,7 +430,7 @@ if __name__ == '__main__':
         full_metadata_list = pickle.load(file)[1]
     
     
-    Q = SegmentedFeatureCollection(full_metadata_list,shearer=1, day='tuesday',\
+    Q = SegmentedFeatureCollection(full_metadata_list,shearer=10, day='thursday',\
                                    mocap_functions = mocap_feature_list,\
                                    env_functions   = envelope_feature_list,\
                                    emg_functions   = emg_feature_list,\

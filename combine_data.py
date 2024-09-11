@@ -9,6 +9,7 @@ import pandas as pd
 import models_movie as mm
 import meta_data as md
 from meta_data import MetaData
+import numpy as np
 
 '''Stitch the files together by searching metadata'''
 #reset_index
@@ -32,7 +33,7 @@ def get_data_pickle(file, **kwargs):
 
 def get_data(metadata_list,**kwargs):
     '''Keyword args:
-        shearer  (1-4)
+        shearer  (1-11)
         day      (mon-fri)
         run      (1-4)
         part     (1-)
@@ -86,7 +87,6 @@ def split_data(df, length=30):
 
 
 def norm_3d_df(myData):
-    import numpy as np
     
     A = myData['Pelvis_T8_x']
     B = myData['Pelvis_T8_y']
@@ -100,8 +100,7 @@ def norm_3d_df(myData):
 def get_lyap(myData,ax):
     from max_lyap_kantz import create_max_dim_embedding,\
     get_n_dim_from_embedding, max_lyap
-    
-    import numpy as np
+
     #Requires a data load
     Q = norm_3d_df(myData)
     #Q = Q[-230000:-30000]
@@ -123,7 +122,6 @@ def get_lyap(myData,ax):
 
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
-    import numpy as np
     from pathlib import Path
     
     shearer = 3

@@ -306,8 +306,9 @@ class DataFile:
         
         xsens_filepath    = Path(dir_path, file_name_start + '_mocap.csv')
         delsys_filepath   = Path(dir_path, file_name_start + '_emg.csv')
-        envelope_filepath = Path(dir_path, file_name_start + '_envelope.csv')     
+        envelope_filepath = Path(dir_path, file_name_start + '_envelope.csv')
         
+              
         #Rename function
         def rename_apply(string):
             if ':' in string:
@@ -327,7 +328,93 @@ class DataFile:
         self.delsys_data = pd.read_csv(delsys_filepath,parse_dates=True, dtype=rcd.delsys_dtypes)
         self.env_df = pd.read_csv(envelope_filepath,parse_dates=True, dtype=rcd.envelope_dtypes)
         
+        print("Delsys Data columns initial: ")
+        print(self.delsys_data.columns)
+        
+        print("Delsys Envelope columns initial: ")
+        print(self.env_df.columns)
+        
+        columns_names_error_list = ['datetime','1 - Gluteus Medius (Left): EMG 1', '2 - L1 ES Left: EMG 2',
+       '3 - Vastus Lateralis (Right): EMG 3',
+       '4 - Vastus Lateralis (Left): EMG 4', '5 - L1 ES Right: EMG 5',
+       '6 - L3 ES Left: EMG 6', '7 - L3 ES Right: EMG 7',
+       '8 - L5 MF Left: EMG 8', '9 - L5 MF Right: EMG 9',
+       '10 - Rectus Abdominis Right: EMG 10',
+       '11 - Rectus Abdominis Left: EMG 11',
+       '12 - External Oblique Right: EMG 12',
+       '13 - External Oblique Left: EMG 13',
+       '14 - Gluteus Medius Right: EMG 14',
+       '15 - Biceps femoris (Hamstring) left: EMG 15',
+       '16 - Biceps femoris (hamstring) Right: EMG 16', 'time', 'labels',
+       'HMM_labels']
+        
+        env_columns_names_error_list = ['datetime', 'timestamp', '1 - Gluteus Medius ', '2 - L1 ES Left',
+       '3 - Vastus Lateralis ', '4 - Vastus Lateralis ', '5 - L1 ES Right',
+       '6 - L3 ES Left', '7 - L3 ES Right', '8 - L5 MF Left',
+       '9 - L5 MF Right', '10 - Rectus Abdominis Right',
+       '11 - Rectus Abdominis Left', '12 - External Oblique Right',
+       '13 - External Oblique Left', '14 - Gluteus Medius Right',
+       '15 - Biceps femoris left', '16 - Biceps femoris Right', 'time',
+       'labels', 'HMM_labels']
+        
+        env_columns_names_error_list_2 = ['datetime', '1 - Gluteus Medius ', '2 - L1 ES Left',
+       '3 - Vastus Lateralis ', '4 - Vastus Lateralis ', '5 - L1 ES Right',
+       '6 - L3 ES Left', '7 - L3 ES Right', '8 - L5 MF Left',
+       '9 - L5 MF Right', '10 - Rectus Abdominis Right',
+       '11 - Rectus Abdominis Left', '12 - External Oblique Right',
+       '13 - External Oblique Left', '14 - Gluteus Medius Right',
+       '15 - Biceps femoris left', '16 - Biceps femoris Right', 'time',
+       'labels', 'HMM_labels']
+        
+        
+        if list(self.delsys_data.columns) == columns_names_error_list:
+            self.delsys_data.columns = ['datetime','Gluteus Medius LEFT: EMG.A 11', 'L1 Erector Spinae LEFT: EMG.A 1',
+       'Vastus Lateralis RIGHT: EMG.A 13',
+       'Vastus Lateralis LEFT: EMG.A 14', 'L1 Erector Spinae RIGHT: EMG.A 2',
+       'L3 Erector Spinae LEFT: EMG.A 3', 'L3 Erector Spinae RIGHT: EMG.A 4',
+       'L5 Multifidus LEFT: EMG.A 5', 'L5 Multifidus RIGHT: EMG.A 6',
+       'Rectus Abdominis (1cm up, 3cm out) RIGHT: EMG.A 7',
+       'Rectus Abdominis (1cm up, 3cm out) LEFT: EMG.A 8',
+       'External Oblique (15cm out) RIGHT: EMG.A 9',
+       'External Oblique (15cm out) LEFT: EMG.A 10',
+       'Gluteus Medius RIGHT: EMG.A 12',
+      'Biceps Femoris LEFT: EMG.A 15',
+       'Biceps Femoris RIGHT: EMG.A 16', 'time', 'labels',
+       'HMM_labels']
+            
+        if list(self.env_df.columns) == env_columns_names_error_list:
+            self.env_df.columns = ['datetime','timestamp','Gluteus Medius LEFT: EMG.A 11', 'L1 Erector Spinae LEFT: EMG.A 1',
+       'Vastus Lateralis RIGHT: EMG.A 13',
+       'Vastus Lateralis LEFT: EMG.A 14', 'L1 Erector Spinae RIGHT: EMG.A 2',
+       'L3 Erector Spinae LEFT: EMG.A 3', 'L3 Erector Spinae RIGHT: EMG.A 4',
+       'L5 Multifidus LEFT: EMG.A 5', 'L5 Multifidus RIGHT: EMG.A 6',
+       'Rectus Abdominis (1cm up, 3cm out) RIGHT: EMG.A 7',
+       'Rectus Abdominis (1cm up, 3cm out) LEFT: EMG.A 8',
+       'External Oblique (15cm out) RIGHT: EMG.A 9',
+       'External Oblique (15cm out) LEFT: EMG.A 10',
+       'Gluteus Medius RIGHT: EMG.A 12',
+      'Biceps Femoris LEFT: EMG.A 15',
+       'Biceps Femoris RIGHT: EMG.A 16', 'time', 'labels',
+       'HMM_labels']
+            
+        if list(self.env_df.columns) == env_columns_names_error_list_2:
+            self.env_df.columns = ['datetime','Gluteus Medius LEFT: EMG.A 11', 'L1 Erector Spinae LEFT: EMG.A 1',
+       'Vastus Lateralis RIGHT: EMG.A 13',
+       'Vastus Lateralis LEFT: EMG.A 14', 'L1 Erector Spinae RIGHT: EMG.A 2',
+       'L3 Erector Spinae LEFT: EMG.A 3', 'L3 Erector Spinae RIGHT: EMG.A 4',
+       'L5 Multifidus LEFT: EMG.A 5', 'L5 Multifidus RIGHT: EMG.A 6',
+       'Rectus Abdominis (1cm up, 3cm out) RIGHT: EMG.A 7',
+       'Rectus Abdominis (1cm up, 3cm out) LEFT: EMG.A 8',
+       'External Oblique (15cm out) RIGHT: EMG.A 9',
+       'External Oblique (15cm out) LEFT: EMG.A 10',
+       'Gluteus Medius RIGHT: EMG.A 12',
+      'Biceps Femoris LEFT: EMG.A 15',
+       'Biceps Femoris RIGHT: EMG.A 16', 'time', 'labels',
+       'HMM_labels']
+        
         #self.xsens_data.index.name = 'datetime'
+        print("Delsys Envelope columns final: ")
+        print(self.env_df.columns)
         
         try:
             self.xsens_data['datetime'] = pd.to_datetime(self.xsens_data['datetime'])#,format='ISO8601')#,infer_datetime_format = True)
@@ -354,6 +441,8 @@ class DataFile:
         
         self.delsys_data.rename(columns=rcd.remove_brackets, inplace=True)
         self.env_df.rename(columns=rcd.remove_brackets,inplace=True)
+        
+        print(self.env_df.columns)
         
     def save_csv(self):
         import os
