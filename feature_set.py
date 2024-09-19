@@ -8,6 +8,7 @@ Created on Fri Jun  5 11:57:34 2020
 import pathlib
 import pandas as pd
 import numpy as np
+from config import GBL_DEBUG
 
 #Boiler plate which prevents Spyder crashing when graphing
 try:
@@ -16,8 +17,6 @@ try:
     shell.enable_matplotlib(gui='qt')
 except:
     pass
-
-debug = 0
 
 class FeatureSet:
     #default dir path is in the repository
@@ -123,11 +122,15 @@ class AllShearersFeatures:
         
         feature_list = [x[feature].fillna(method='bfill') for x in df_list]
         
-        flat_feature_list = np.concatenate(feature_list)
         
+        if len(feature_list) > 1:
+            flat_feature_list = np.concatenate(feature_list)
+            return np.array(flat_feature_list)
+        else:
+            return feature_list
         #TODO:
         #Need to be careful with empty features
-        return np.array(flat_feature_list)
+        
            
     def get_subject_runs_feature(self, subject, feature):
         '''

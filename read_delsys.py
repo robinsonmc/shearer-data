@@ -13,8 +13,8 @@ Use function read_delsys_csv(filepath) to return a dask dataframe with data
 import csv
 #import dask.dataframe as dd
 import pandas as pd
+from config import GBL_DEBUG
 
-debug = 1
 
 def get_delsys_metadata(file_path):
     '''Parse the first part and last part of delsys csv file and retrieve 

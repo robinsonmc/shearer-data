@@ -8,6 +8,7 @@ Run this to get example plots
 """
 
 import extract_from_raw_data as efrd
+from config import GBL_PATH_TO_DATA
 
 if __name__ == '__main__':
     '''
@@ -25,4 +26,4 @@ if __name__ == '__main__':
     '''
     
     efrd.get_the_feature_plots(extract_metadata = False, segment_data = False,
-                          extract_features = False, data_path="D:\Data_for_up")
+                         extract_features = False, data_path=GBL_PATH_TO_DATA)

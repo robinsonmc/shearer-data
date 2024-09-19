@@ -16,8 +16,8 @@ from tqdm import tqdm
 import pathlib
 import pickle
 from pathlib import Path
+from config import GBL_DEBUG
 
-debug = 1
 
 class SegmentedDataFile:
     '''
@@ -133,7 +133,7 @@ class SegmentedFeatureCollection:
             segmented_data = SegmentedDataFile(full_metadata_list,\
                                         shearer=shearer, run=i, day=day)
                 
-            print(segmented_data)
+            if GBL_DEBUG == 1: print(segmented_data)
         
             #MoCap
             mocap_features = {}
@@ -430,7 +430,7 @@ if __name__ == '__main__':
         full_metadata_list = pickle.load(file)[1]
     
     
-    Q = SegmentedFeatureCollection(full_metadata_list,shearer=10, day='thursday',\
+    Q = SegmentedFeatureCollection(full_metadata_list,shearer=1, day='tuesday',\
                                    mocap_functions = mocap_feature_list,\
                                    env_functions   = envelope_feature_list,\
                                    emg_functions   = emg_feature_list,\

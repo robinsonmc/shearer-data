@@ -8,12 +8,12 @@ import STFT as stft
 import pandas as pd
 import time_domain_processing as tdp
 import numpy as np
+from config import GBL_DEBUG
 
 #Both equivalent..........
 
 def muscle_mean_freq(f,t,spectogram):
     
-    #pd.set_option('plotting.backend', 'pandas_bokeh')
     sum_if = 0
     sum_i = 0
     for i,v in spectogram.iterrows():
@@ -39,14 +39,11 @@ def muscle_mean_freq(f,t,spectogram):
     df_RMS.columns = ['time','RMS']
     del temp_df_RMS
     
-    #df_mean_f.plot_bokeh('time','mean_f',kind='line')
-    
     
     return df_mean_f, df_RMS
 
 def muscle_spec_moment_ratio(f,t,spectogram, ind_1, ind_2):
     #Tested and working
-    #pd.set_option('plotting.backend', 'pandas_bokeh')
     sum_if = 0
     sum_i = 0
     for i,v in spectogram.iterrows():
@@ -68,7 +65,6 @@ def muscle_spec_moment_ratio(f,t,spectogram, ind_1, ind_2):
 
 
 def muscle_spec_moment(f,t,Zxx,p):
-    #SUSPECT THIS IS INCORRECT
     
     '''
     f,t,Zxx - output of spectogram function
@@ -98,9 +94,6 @@ def muscle_spec_moment(f,t,Zxx,p):
     df = pd.DataFrame()
     df['time']          = t[:-1]
     df['spec_moment_p'] = instant_spec_moment
-    #df_rms = pd.DataFrame()
-    #df_rms['spec_moment_rms'] = tdp.window_rms(instant_spec_moment,250)
-    #df_rms['time'] = t[249:-1]
     return df
 
 if __name__ == '__main__':

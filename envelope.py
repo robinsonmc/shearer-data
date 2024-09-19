@@ -13,8 +13,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import read_delsys
 from pathlib import Path
+from config import GBL_DEBUG
 
-debug = 1
 
 class MVC:
     def __init__(self, dir_path, freq):
@@ -70,7 +70,7 @@ class MVC:
                 or max_dict.get(key) > mvc_dict.get(key):
                     mvc_dict[key] = max_dict[key]
     
-        print(mvc_dict)
+        if GBL_DEBUG == 1: print(mvc_dict)
         #Load all of these to dataframe, perform the rectification on these
         #Once rectified and low pass filtered, take the maximum for each sensor
         #WRITE PICKLE FILE THEN RETURN
@@ -82,7 +82,7 @@ class MVC:
     
     #THIS CALLS DATA IN THE FORM THAT IS CONFUSING
     def get_mvc_from_file(self,filepath,freq,downsample):
-        if debug == 1: print(filepath)
+        if GBL_DEBUG == 1: print(filepath)
         dataframe = read_delsys.read_delsys_csv(filepath)
         env = Envelope.get_envelope(dataframe,freq,downsample)
         
@@ -111,7 +111,6 @@ class Envelope:
         #   then -subtract mean
         #   then filter
         #   then downsample to 10Hz
-        debug = 0
         label_flag = 0
         HMM_label_flag = 0
         
@@ -131,7 +130,7 @@ class Envelope:
         mean = dataframe.mean()
         mean['time'] = 0
         
-        if debug == 1:
+        if GBL_DEBUG == 1:
             #print('Mean is {}'.format(mean))
             print('Datafame to get envelope for is {}'.format(dataframe))
             print('Dataframe columns are {}'.format(columns))
@@ -145,7 +144,6 @@ class Envelope:
         b,a = ss.butter(2,freq,btype='lowpass',fs=fsq)
         
         output = ss.lfilter(b,a,dataframe,axis=0)
-        #print(output)
         output = pd.DataFrame(output,index=index,columns=columns)
         
         
@@ -168,16 +166,16 @@ class Envelope:
     
     @staticmethod
     def normalise(envelope_df,mvc_dict):
-        if debug == 1: 
+        if GBL_DEBUG == 1: 
             print('At the start of normalise: {}'.format(envelope_df))
             print('At start the numsamples is {}'.format(len(envelope_df)))
         # DO NOT NORMALISE TIME COLUMN
         for colname, coldata in envelope_df.iteritems():
             if colname != 'time' and colname != 'labels' and colname != 'HMM_labels':
-                print(colname)
+                if GBL_DEBUG == 1: print(colname)
                 envelope_df[colname] = coldata/mvc_dict[colname][0]
         
-        if debug == 1:
+        if GBL_DEBUG == 1:
             print('At the end of normalise return: {}'.format(envelope_df))
             print('Samples now at: {}'.format(len(envelope_df)))
         return envelope_df

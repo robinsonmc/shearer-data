@@ -17,6 +17,7 @@ from pathlib import Path
 import numpy as np
 import scipy.signal as ss
 import pandas as pd
+from config import GBL_DEBUG
 
 
 #Start with the shearers that worked perfectly
@@ -63,7 +64,7 @@ def label_data_all_shearers(DataFile,model):
         feature_df = features_and_labels.drop('labels',axis=1)
     else:
         feature_df = features_and_labels
-    #print(feature_df)
+
     print('Done...')
     
     HMM_labels = label_data(feature_df,model)
@@ -92,29 +93,27 @@ def label_data(feature_df,model):
 def update_DF_shearer_new(dir_path,model):
     import pandas as pd
     
-    debug = 0
     myData = mm.DataFile(dir_path)
     print('Loaded the datafile...')
     #Label, drop first and last, add to dataframe
     labels_to_add = label_data_all_shearers(myData,model)
-    #if debug == 1: print(labels_to_add)
+    if GBL_DEBUG == 1: print(labels_to_add)
     HMM_labels = labels_to_add[1:-1]
     
     start_time = myData.xsens_data.index[0]
-    if debug == 1: print('The start_time is {}'.format(start_time))
+    if GBL_DEBUG == 1: print('The start_time is {}'.format(start_time))
     time_range = pd.date_range(start_time, periods = len(HMM_labels), freq ='50ms',tz='Australia/Melbourne')
-    if debug == 1: print('The time range is {}'.format(time_range))
+    if GBL_DEBUG == 1: print('The time range is {}'.format(time_range))
     label_df   = pd.DataFrame(data=HMM_labels,index=time_range,columns=['HMM_labels'])
-    if debug == 1: print('The dataframe label_df is {}'.format(label_df))
+    if GBL_DEBUG == 1: print('The dataframe label_df is {}'.format(label_df))
     #label_df['labels'] = HMM_labels
     #label_df.index = time_range
     
-    if debug == 1:
+    if GBL_DEBUG == 1:
         print('the length of HMM_labels is {}'.format(len(HMM_labels)))
         print('the length of the index is {}'.format(len(time_range)))
     
     #myData.xsens_data['HMM_labels'] = HMM_labels
-    #print('Labels added to xsens_data...')
     #Now need to label the emg data
     try:
         del myData.delsys_data['HMM_labels']
@@ -150,11 +149,11 @@ def update_DF_shearer_new(dir_path,model):
         combined['labels'] = labels_col
         combined = combined[combined['time_ms'].notnull()]
         myData.xsens_data = combined
-        if debug == 1: print('The final dataframe is: {}'.format(myData.xsens_data))
+        if GBL_DEBUG == 1: print('The final dataframe is: {}'.format(myData.xsens_data))
         
         myData.write_pickles()
         print('New datafile stored as pickle...')
-        if debug == 1: return (HMM_labels, myData.xsens_data) 
+        if GBL_DEBUG == 1: return (HMM_labels, myData.xsens_data) 
         
 def generate_file_list(directory):
     #Generate the file list - need directories with _run*_ in the name

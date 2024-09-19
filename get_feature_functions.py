@@ -15,6 +15,8 @@ import smoothness.SPARC as SP
 import quaternion
 import scipy.stats as ss
 import TEST_MFC as tm
+from config import GBL_DEBUG
+
 #Rename a function - set funciton.__name__ to custom
 #This is needed because the apply function creates a function
 #to be passed to get_feature and these should be uniquely named
@@ -148,8 +150,7 @@ def get_time(df):
     return result
 
 def get_datetime(df):
-    #print(df)
-    print('Dataframe shape is: {}'.format(df.shape))
+    if GBL_DEBUG == 1: print('Dataframe shape is: {}'.format(df.shape))
     result = df.index[0] 
     return result
 
@@ -273,7 +274,6 @@ def ApEn(U, m, r):
 
 # Usage example
 #U = np.array([85, 80, 89] * 17)
-#print ApEn(U, 2, 3)
     
 def sample_entropy(df, col_name):
     from sampen import sampen2

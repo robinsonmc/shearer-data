@@ -14,7 +14,7 @@ from io import StringIO
 import xml.etree.ElementTree as ET
 
 #DEBUG FLAG
-debug = 1
+from config import GBL_DEBUG
 
 try:
     import IPython
@@ -64,7 +64,7 @@ def read_xsens_xml(file_path):
     joint_labels = []
     for child in joints:
         current_joint = child.attrib['label']
-        if debug == 1: print('Current Joint: {}'.format(current_joint))
+        if GBL_DEBUG == 1: print('Current Joint: {}'.format(current_joint))
         joint_labels.append(current_joint + '_x')
         joint_labels.append(current_joint + '_y')
         joint_labels.append(current_joint + '_z')
@@ -73,7 +73,7 @@ def read_xsens_xml(file_path):
     ergojoint_labels = []
     for child in ergojoints:
         current_joint = child.attrib['label']
-        if debug == 1: print('Current Ergo Joint: {}'.format(current_joint))
+        if GBL_DEBUG == 1: print('Current Ergo Joint: {}'.format(current_joint))
         ergojoint_labels.append(current_joint + '_x')
         ergojoint_labels.append(current_joint + '_y')
         ergojoint_labels.append(current_joint + '_z')
@@ -85,7 +85,7 @@ def read_xsens_xml(file_path):
     else:
         xsens_dataframe_columns = (['time_ms'] + joint_labels + ergojoint_labels
         + ['CoG_x', 'CoG_y', 'CoG_z'] + ['timecode'])
-    if debug == 1: print('number of columns in the xml files is: {}'\
+    if GBL_DEBUG == 1: print('number of columns in the xml files is: {}'\
               .format(len(xsens_dataframe_columns)))
     
     #Need to get the frames
@@ -139,17 +139,18 @@ def read_xsens_xml(file_path):
             
             
             all_data = [time] + all_joint_data + all_ergo_data + all_cog_data + [child.attrib['tc']]
-            if count == 0 and debug == 1: 
+            if count == 0 and GBL_DEBUG == 1: 
                 print('length of the actual data: {}'.format(len(all_data)))
             #Add data to dictionary
             xsens_data[index] = all_data
             count += 1;
             
             
-    print(all_data)
-    print(len(all_data))
-    print(xsens_dataframe_columns)   
-    print(len(xsens_dataframe_columns))     
+    if GBL_DEBUG == 1: 
+        print(all_data)
+        print(len(all_data))
+        print(xsens_dataframe_columns)   
+        print(len(xsens_dataframe_columns))     
     assert(len(all_data)==len(xsens_dataframe_columns))
     #Create dataframe from the dictionary
     xsens_dataframe = pd.DataFrame.from_dict(xsens_data, orient='index',

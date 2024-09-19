@@ -5,6 +5,8 @@ Created on Thu Jan 16 13:25:28 2020
 @author: mrobinson2
 """
 
+from config import GBL_DEBUG
+
 def asym_hysteresis(result, long_th, short_th):
     import copy
     

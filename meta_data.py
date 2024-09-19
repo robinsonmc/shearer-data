@@ -6,6 +6,7 @@ Created on Tue Mar 31 16:34:56 2020
 """
 import pathlib
 import models_movie as mm
+from config import GBL_DEBUG
 
 class StringNotFound(ValueError):
     pass

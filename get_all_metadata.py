@@ -9,6 +9,7 @@ import sys
 import meta_data as md
 from meta_data import MetaData
 from pathlib import Path
+from config import GBL_DEBUG
 
 def get_all_metadata(directory, *args):
     #Generalised RUN ON ALL
@@ -29,14 +30,14 @@ def get_all_metadata(directory, *args):
             test.append(filename)
         if test:
             try:
-                print(str(file_list[i]))
+                if GBL_DEBUG == 1: print(str(file_list[i]))
                 result.append(md.MetaData(str(file_list[i]),*args))
                 dir_path_list.append(str(file_list[i]))
             except IndexError:
                 print('{} did not have enough data points'.format(str(file_list[i])))
             except ValueError as e:
                 print('{}: {}'.format(str(file_list[i]),e))
-    print(result[0].run)        
+    if GBL_DEBUG == 1: print(result[0].run)        
     return (dir_path_list,result)
 
 

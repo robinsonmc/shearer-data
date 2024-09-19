@@ -41,6 +41,7 @@ import models_movie as mm
 import matplotlib.pyplot as plt
 import mean_freq_calc as mfc
 import STFT as stft
+from config import GBL_DEBUG
 
 class Summary:
     
@@ -305,13 +306,13 @@ class Summary:
             
             #Check for empty dataframes here - and short ones?? then delete
             #the correct index from all three
-            print('entering for loop...')
+            if GBL_DEBUG == 1: print('entering for loop...')
             for i in reversed(range(len(EMG_shortened))):
-                print('if statement to be evaluated...')
+                if GBL_DEBUG == 1: print('if statement to be evaluated...')
                 if (len(EMG_shortened[i]) < 15) or \
                    (len(xsens_shortened[i]) < 15) or \
                    (len(delsys_shortened[i]) < 15):
-                       print('If statement true... trying to delete...')
+                       if GBL_DEBUG == 1: print('If statement true... trying to delete...')
                        del EMG_shortened[i]
                        del xsens_shortened[i]
                        del delsys_shortened[i]
@@ -428,14 +429,15 @@ class Summary:
         time_shift                    = temp_df_raw_emg['time'].shift(-1)
         
         temp_df_raw_emg = temp_df_raw_emg[~temp_df_raw_emg.index.duplicated(keep='first')]
-        print(temp_df_raw_emg.columns)
-        print(temp_df_raw_emg)
-        print(len(temp_df_raw_emg))
-        print(temp_df_raw_emg['time'].values)
-        print(len(temp_df_raw_emg['time'].values))
-        print(time_shift.fillna(method='ffill'))
-        print(len(time_shift.fillna(method='ffill').values))
-        print(time_shift.fillna(method='ffill').values-temp_df_raw_emg['time'].values)
+        if GBL_DEBUG == 1: 
+            print(temp_df_raw_emg.columns)
+            print(temp_df_raw_emg)
+            print(len(temp_df_raw_emg))
+            print(temp_df_raw_emg['time'].values)
+            print(len(temp_df_raw_emg['time'].values))
+            print(time_shift.fillna(method='ffill'))
+            print(len(time_shift.fillna(method='ffill').values))
+            print(time_shift.fillna(method='ffill').values-temp_df_raw_emg['time'].values)
         #temp_df_raw_emg.drop(columns='time_shift',inplace=True)
         
         temp_df_raw_emg.insert(len(temp_df_raw_emg.columns),'time_shift',time_shift.fillna(method='ffill').values,False)
@@ -751,8 +753,9 @@ class Summary:
             early_stat_df = Summary.ensemble_average(self.early_10_xsens,2000,joint)
             late_stat_df = Summary.ensemble_average(self.late_10_xsens,2000,joint)
             
-            Summary.plot_ensemble(early_stat_df,'r',joint,str(self.run),True, title)
-            Summary.plot_ensemble(late_stat_df,'b',joint, str(self.run),False, title)
+            if GBL_DEBUG == 1: 
+                Summary.plot_ensemble(early_stat_df,'r',joint,str(self.run),True, title)
+                Summary.plot_ensemble(late_stat_df,'b',joint, str(self.run),False, title)
     
     #Good method - make optional? Some analysis would need the raw data    
     @staticmethod

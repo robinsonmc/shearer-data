@@ -15,8 +15,7 @@ from pathlib import Path, PosixPath
 import envelope
 import pickle
 import read_csv_datatypes as rcd
-
-debug = 1
+from config import GBL_DEBUG
 
 class DataFile:
     '''
@@ -46,7 +45,7 @@ class DataFile:
         
         self.MVC_FREQ = 3
         
-        if debug == 1: 
+        if GBL_DEBUG == 1: 
             print('the filepath is: {}'.format(self.dir_path))
         
         if dir_path is not None:
@@ -122,24 +121,24 @@ class DataFile:
         #Xsens motion capture
         file_path_xsens = self.dir_path / Path(self.dir_path.parts[-1]\
                                                + '.mvnx')
-        if debug == 1: print('Loading: ' + str(file_path_xsens) + '...')
+        if GBL_DEBUG == 1: print('Loading: ' + str(file_path_xsens) + '...')
         self.xsens_data, start_time = self.read_xsens_data_from_file\
                                                         (file_path_xsens)
         self.meta_data['start_time'] = start_time
         self.xsens_data.index.name = 'datetime'
         assert(self.meta_data['start_time'] is not None)
         
-        if debug == 1: 
+        if GBL_DEBUG == 1: 
             print('Done...')
             print(self.xsens_data)
         
         #Delsys EMG
         file_path_delsys = self.dir_path / Path(self.dir_path.parts[-1]\
                                                 + '.csv')
-        if debug == 1: print('Loading: '+ str(file_path_delsys)+'...')
+        if GBL_DEBUG == 1: print('Loading: '+ str(file_path_delsys)+'...')
         self.delsys_data = self.read_delsys_data_from_file(file_path_delsys)
         
-        if debug == 1: print('Done...')
+        if GBL_DEBUG == 1: print('Done...')
         
         #Set the index using the start_time
         self.delsys_data['timestamp'] = self.meta_data['start_time'] +\
@@ -149,7 +148,7 @@ class DataFile:
         self.delsys_data = self.delsys_data.drop(columns='timestamp')
         self.delsys_data.index.name = 'datetime'
         
-        if debug == 1: print(self.delsys_data)
+        if GBL_DEBUG == 1: print(self.delsys_data)
 
     
     def saveLabels(self):
@@ -328,11 +327,12 @@ class DataFile:
         self.delsys_data = pd.read_csv(delsys_filepath,parse_dates=True, dtype=rcd.delsys_dtypes)
         self.env_df = pd.read_csv(envelope_filepath,parse_dates=True, dtype=rcd.envelope_dtypes)
         
-        print("Delsys Data columns initial: ")
-        print(self.delsys_data.columns)
+        if GBL_DEBUG == 1: 
+            print("Delsys Data columns initial: ")
+            print(self.delsys_data.columns)
         
-        print("Delsys Envelope columns initial: ")
-        print(self.env_df.columns)
+            print("Delsys Envelope columns initial: ")
+            print(self.env_df.columns)
         
         columns_names_error_list = ['datetime','1 - Gluteus Medius (Left): EMG 1', '2 - L1 ES Left: EMG 2',
        '3 - Vastus Lateralis (Right): EMG 3',
@@ -413,8 +413,9 @@ class DataFile:
        'HMM_labels']
         
         #self.xsens_data.index.name = 'datetime'
-        print("Delsys Envelope columns final: ")
-        print(self.env_df.columns)
+        if GBL_DEBUG == 1:
+            print("Delsys Envelope columns final: ")
+            print(self.env_df.columns)
         
         try:
             self.xsens_data['datetime'] = pd.to_datetime(self.xsens_data['datetime'])#,format='ISO8601')#,infer_datetime_format = True)
@@ -442,7 +443,7 @@ class DataFile:
         self.delsys_data.rename(columns=rcd.remove_brackets, inplace=True)
         self.env_df.rename(columns=rcd.remove_brackets,inplace=True)
         
-        print(self.env_df.columns)
+        if GBL_DEBUG == 1: print(self.env_df.columns)
         
     def save_csv(self):
         import os

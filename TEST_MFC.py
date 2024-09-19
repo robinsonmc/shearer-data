@@ -73,10 +73,14 @@ def muscle_spec_moment_ratio_from_psd(f,psd, ind_1, ind_2):
     return mean_f
 
 def psd(data):
+    #from matplotlib.mlab import psd
     import matplotlib.pyplot as plt
     
     Pxx,freq = plt.psd(data, NFFT=2048, Fs=2148.148148, \
                            noverlap=1024, scale_by_freq=True, return_line=False)
+    
+    #Pxx,freq = psd(data, NFFT=2048, Fs=2148.148148, \
+    #                       noverlap=1024, scale_by_freq=True, return_line=False)
     
     return Pxx,freq
     

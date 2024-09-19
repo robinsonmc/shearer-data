@@ -23,46 +23,42 @@ from get_feature_functions import col_average, col_std,\
                                       apply_twocol_twodf, DRP, apply_DRP,\
                                       shannon_entropy, apply_spec_ind,\
                                       spectral_ind_ratio,get_datetime
+from config import GBL_DEBUG,\
+                   GBL_PATH_TO_DATA,\
+                   GBL_EXTRACTED_FEATURES_SAVE_PATH,\
+                   GBL_PATH_TO_METADATA_ORIG,\
+                   GBL_SAVEPATH_FOR_GENERATED_METADATA
 
-def get_the_feature_plots(extract_metadata = False, segment_data = False,
-                          extract_features = False, data_path="D:\Data_for_up"):
-
-
-    #Optional steps
-    #1
-    #extract_metadata = False
-    #2
-    #segment_data = True
-    #3
-    #extract_features = False
+def get_the_feature_plots(extract_metadata = False, 
+                          segment_and_extract_features = False,
+                          data_path=GBL_PATH_TO_DATA):
     
     
     if extract_metadata:
     
         full_metadata_list = gam.get_all_metadata(data_path)
-        #a = gam.get_all_metadata("D:\Data_for_up\Week 4")
         
-        with open('metadata_all_shearers.pickle','wb') as f:
+        with open(GBL_SAVEPATH_FOR_GENERATED_METADATA,'wb') as f:
             pickle.dump(full_metadata_list,f,protocol=pickle.HIGHEST_PROTOCOL)
             
     else:
         
-        with open('metadata_all_shearers.pickle','rb') as f:
+        with open(GBL_PATH_TO_METADATA_ORIG,'rb') as f:
         
             full_metadata_list =  pickle.load(f)[1]
             
-    if segment_data:
+    if segment_and_extract_features:
                                
         mocap_feature_list = [apply_to_column(col_average,'jRightKnee_z')]
         
-        envelope_feature_list = []
+        envelope_feature_list = [
         #[apply_to_two_columns(two_col_ratio,'L1 Erector Spinae LEFT','Rectus Abdominis RIGHT')]
-    #                              apply_to_column(col_average,'L1 Erector Spinae LEFT: EMG.A 1'),\
-    #                             apply_to_column(col_average,'L1 Erector Spinae RIGHT: EMG.A 2'),\
-    #                             apply_to_column(col_average,'L3 Erector Spinae LEFT: EMG.A 3'),\
-    #                             apply_to_column(col_average,'L3 Erector Spinae RIGHT: EMG.A 4'),\
-    #                             apply_to_column(col_average,'L5 Multifidus LEFT: EMG.A 5'),\
-    #                             apply_to_column(col_average,'L5 Multifidus RIGHT: EMG.A 6'),\
+                                  apply_to_column(col_average,'L1 Erector Spinae LEFT'),\
+                                 apply_to_column(col_average,'L1 Erector Spinae RIGHT'),\
+                                 apply_to_column(col_average,'L3 Erector Spinae LEFT'),\
+                                 apply_to_column(col_average,'L3 Erector Spinae RIGHT'),\
+                                 apply_to_column(col_average,'L5 Multifidus LEFT'),\
+                                 apply_to_column(col_average,'L5 Multifidus RIGHT')]
     #                             apply_to_column(col_average,'Rectus Abdominis (1cm up - 3cm out) RIGHT: EMG.A 7'),\
     #                             apply_to_column(col_average,'Rectus Abdominis (1cm up - 3cm out) LEFT: EMG.A 8'),\
     #                             apply_to_column(col_average,'External Oblique (15cm out) RIGHT: EMG.A 9'),\
@@ -74,20 +70,24 @@ def get_the_feature_plots(extract_metadata = False, segment_data = False,
     #                             apply_to_column(col_average,'Biceps Femoris LEFT: EMG.A 15'),\
     #                             apply_to_column(col_average,'Biceps Femoris RIGHT: EMG.A 16')]
     #    
-        emg_feature_list = [get_datetime]
-                            #apply_spec_ind(spectral_ind_ratio,'L1 Erector Spinae LEFT',1,0),\
+        emg_feature_list = [get_datetime,
+                            apply_spec_ind(spectral_ind_ratio,'L1 Erector Spinae LEFT',1,0),\
+                            apply_to_column(shannon_entropy,'L3 Erector Spinae RIGHT'),\
                             #apply_spec_ind(spectral_ind_ratio,'L1 Erector Spinae LEFT',-1,2),\
                             #apply_spec_ind(spectral_ind_ratio,'L1 Erector Spinae LEFT',-1,3),\
                             #apply_spec_ind(spectral_ind_ratio,'L1 Erector Spinae LEFT',-1,4),\
                             #apply_spec_ind(spectral_ind_ratio,'L1 Erector Spinae LEFT',-1,5),\
                             #apply_to_column(mean_freq_dataframe,'L1 Erector Spinae RIGHT'),\
-                            #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',1,0),\
+                            apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',1,0),\
+                            apply_to_column(shannon_entropy,'L3 Erector Spinae LEFT'),\
                             #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',-1,2),\
                             #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',-1,3),\
                             #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',-1,4),\
                             #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',-1,5)]
-                            #apply_to_column(mean_freq_dataframe,'L5 Multifidus LEFT'),\
-                            #apply_to_column(mean_freq_dataframe,'L5 Multifidus RIGHT')]
+                            apply_to_column(mean_freq_dataframe,'L5 Multifidus LEFT'),\
+                                apply_to_column(shannon_entropy,'L5 Multifidus LEFT'),\
+                                    apply_to_column(shannon_entropy,'L5 Multifidus RIGHT'),\
+                            apply_to_column(mean_freq_dataframe,'L5 Multifidus RIGHT')]
     #                        apply_to_column(mean_freq_dataframe,'Rectus Abdominis (1cm up - 3cm out) RIGHT: EMG.A 7'),\
     #                        #Rectus Abdominis (1cm up - 3cm out) LEFT: EMG.A 8
     #                        apply_to_column(mean_freq_dataframe,'Rectus Abdominis (1cm up - 3cm out) LEFT: EMG.A 8'),\
@@ -102,13 +102,13 @@ def get_the_feature_plots(extract_metadata = False, segment_data = False,
         
         mocap_env_feature_list = []#apply_twocol_twodf(two_df_mult,'Pelvis_T8_z','L3 Erector Spinae LEFT')]
         
-        emg_shift_feature_list = [apply_spec_ind(spectral_ind_ratio,'L1 Erector Spinae LEFT',1,0)]
+        emg_shift_feature_list = [apply_spec_ind(spectral_ind_ratio,'L1 Erector Spinae LEFT',1,0),
                             #apply_spec_ind(spectral_ind_ratio,'L1 Erector Spinae LEFT',-1,2),\
                             #apply_spec_ind(spectral_ind_ratio,'L1 Erector Spinae LEFT',-1,3),\
                             #apply_spec_ind(spectral_ind_ratio,'L1 Erector Spinae LEFT',-1,4),\
                             #apply_spec_ind(spectral_ind_ratio,'L1 Erector Spinae LEFT',-1,5),\
                             #apply_to_column(mean_freq_dataframe,'L1 Erector Spinae RIGHT'),\
-                            #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',1,0),\
+                            apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',1,0)]
                             #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',-1,2)]
                             #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',-1,3),\
                             #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',-1,4),\
@@ -126,7 +126,7 @@ def get_the_feature_plots(extract_metadata = False, segment_data = False,
         #Q.features is a list of features split by run
         
         #dir_path must already exist
-        dir_path = 'saved_features_test_extract_new'
+        dir_path = GBL_EXTRACTED_FEATURES_SAVE_PATH
         Q.store_features(pathlib.Path(pathlib.Path.cwd(),dir_path))
         
         paf.plot_figures(dir_path)

@@ -20,7 +20,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 import statsmodels.formula.api as smf
-
+from config import GBL_DEBUG
 import matplotlib
 
 def plot_figures(dirPath='new_saved_features_11_subjects'):

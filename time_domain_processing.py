@@ -15,14 +15,18 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+from config import GBL_DEBUG
 
 #Set the default backend for df plotting to bokeh
 #pd.set_option('plotting.backend', 'pandas_bokeh')
 
 def normalise(envelope_df,mvc_dict):
-    # DO NOT NORMALISE TIME COLUMN
+    
     for colname, coldata in envelope_df.iteritems():
-        print(colname)
+        
+        if GBL_DEBUG == 1: print(colname)
+        
+        # DO NOT NORMALISE TIME COLUMN
         if colname != 'time':
             envelope_df[colname] = coldata/mvc_dict[colname]
     
