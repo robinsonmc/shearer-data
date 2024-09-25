@@ -22,7 +22,7 @@ from get_feature_functions import col_average, col_std,\
                                       two_df_mult, two_col_norm,\
                                       apply_twocol_twodf, DRP, apply_DRP,\
                                       shannon_entropy, apply_spec_ind,\
-                                      spectral_ind_ratio,get_datetime
+                                      spectral_ind_ratio,get_datetime, quantile_05
 from config import GBL_DEBUG,\
                    GBL_PATH_TO_DATA,\
                    GBL_EXTRACTED_FEATURES_SAVE_PATH,\
@@ -49,16 +49,18 @@ def get_the_feature_plots(extract_metadata = False,
             
     if segment_and_extract_features:
                                
-        mocap_feature_list = [apply_to_column(col_average,'jRightKnee_z')]
+        mocap_feature_list = [apply_to_column(quantile_05,'jRightKnee_z'),\
+                              apply_to_column(quantile_05, 'jRightHip_z'),\
+                                  apply_to_column(quantile_05, 'Pelvis_T8_z')]
         
         envelope_feature_list = [
         #[apply_to_two_columns(two_col_ratio,'L1 Erector Spinae LEFT','Rectus Abdominis RIGHT')]
-                                  apply_to_column(col_average,'L1 Erector Spinae LEFT'),\
-                                 apply_to_column(col_average,'L1 Erector Spinae RIGHT'),\
-                                 apply_to_column(col_average,'L3 Erector Spinae LEFT'),\
-                                 apply_to_column(col_average,'L3 Erector Spinae RIGHT'),\
-                                 apply_to_column(col_average,'L5 Multifidus LEFT'),\
-                                 apply_to_column(col_average,'L5 Multifidus RIGHT')]
+                                  apply_to_column(quantile_05,'L1 Erector Spinae LEFT'),\
+                                 apply_to_column(quantile_05,'L1 Erector Spinae RIGHT'),\
+                                 apply_to_column(quantile_05,'L3 Erector Spinae LEFT'),\
+                                 apply_to_column(quantile_05,'L3 Erector Spinae RIGHT'),\
+                                 apply_to_column(quantile_05,'L5 Multifidus LEFT'),\
+                                 apply_to_column(quantile_05,'L5 Multifidus RIGHT')]
     #                             apply_to_column(col_average,'Rectus Abdominis (1cm up - 3cm out) RIGHT: EMG.A 7'),\
     #                             apply_to_column(col_average,'Rectus Abdominis (1cm up - 3cm out) LEFT: EMG.A 8'),\
     #                             apply_to_column(col_average,'External Oblique (15cm out) RIGHT: EMG.A 9'),\
@@ -114,20 +116,26 @@ def get_the_feature_plots(extract_metadata = False,
                             #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',-1,4),\
                             #apply_spec_ind(spectral_ind_ratio,'L3 Erector Spinae LEFT',-1,5)]
         
-        Q = sfc.SegmentedFeatureCollection(full_metadata_list,shearer=1, day='tuesday',\
-                                       mocap_functions = mocap_feature_list,\
-                                       env_functions   = envelope_feature_list,\
-                                       emg_functions   = emg_feature_list,\
-                                       mocap_env_functions = mocap_env_feature_list,\
-                                       emg_shift_functions = emg_shift_feature_list)
         
+       
+        #Shearer days    
+        shearer_days = [(8,'tuesday'),(1,'tuesday')]
+        
+        for shearer_day in shearer_days:
+            Q = sfc.SegmentedFeatureCollection(full_metadata_list,shearer=shearer_day[0], day=shearer_day[1],\
+                                           mocap_functions = mocap_feature_list,\
+                                           env_functions   = envelope_feature_list,\
+                                           emg_functions   = emg_feature_list,\
+                                           mocap_env_functions = mocap_env_feature_list,\
+                                           emg_shift_functions = emg_shift_feature_list)
             
-        #Example: get the shearer 1 segmented data
-        #Q.features is a list of features split by run
-        
-        #dir_path must already exist
-        dir_path = GBL_EXTRACTED_FEATURES_SAVE_PATH
-        Q.store_features(pathlib.Path(pathlib.Path.cwd(),dir_path))
+                
+            #Example: get the shearer 1 segmented data
+            #Q.features is a list of features split by run
+            
+            #dir_path must already exist
+            dir_path = GBL_EXTRACTED_FEATURES_SAVE_PATH
+            Q.store_features(pathlib.Path(pathlib.Path.cwd(),dir_path))
         
         paf.plot_figures(dir_path)
         

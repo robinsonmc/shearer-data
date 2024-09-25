@@ -119,15 +119,29 @@ class AllShearersFeatures:
         '''
         
         df_list = self.dict_all_FS[self.shearers[subject]].feature_list
+               
+        try:
+            feature_list = [x[feature].fillna(method='bfill') for x in df_list]
         
-        feature_list = [x[feature].fillna(method='bfill') for x in df_list]
-        
-        
-        if len(feature_list) > 1:
-            flat_feature_list = np.concatenate(feature_list)
-            return np.array(flat_feature_list)
-        else:
-            return feature_list
+        except KeyError as e:
+            
+            print('feature not found: ' + feature)
+            print(df_list)
+            print('subject: ' + str(subject))
+            
+            print('Trying modified feature...')
+            
+            feature_mod = feature.replace(" ", "_")
+            print('modified feature: ' + feature_mod)
+            feature_list = [x[feature_mod].fillna(method='bfill') for x in df_list]
+            
+        finally:
+            
+            if len(feature_list) > 1:
+                flat_feature_list = np.concatenate(feature_list)
+                return np.array(flat_feature_list)
+            else:
+                return feature_list
         #TODO:
         #Need to be careful with empty features
         

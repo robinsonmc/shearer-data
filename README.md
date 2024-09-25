@@ -3,7 +3,7 @@
 ## Set the correct paths
 Edit the config.py file with the right paths, (a) to the root directory where 
 the data is, and (b) optionally a directory for the extracted features 
-if desired
+if running with the segment_and_extract_features arg set true.
 
 ## Run from saved feature list
 If you run Run.py it will call get_the_feature_plots with default args which

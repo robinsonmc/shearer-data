@@ -19,11 +19,11 @@ if __name__ == '__main__':
     
     The following conditions can be set to true to extract from the raw data:
         - extract_metadata
-        - segment_data
-        - extract_features
+        - segment and extract_features
         
     Note: this will take a lot longer to run
     '''
     
-    efrd.get_the_feature_plots(extract_metadata = False, segment_data = False,
-                         extract_features = False, data_path=GBL_PATH_TO_DATA)
+    efrd.get_the_feature_plots(extract_metadata = False, 
+                          segment_and_extract_features = True,
+                          data_path=GBL_PATH_TO_DATA)
