@@ -119,7 +119,11 @@ def get_the_feature_plots(extract_metadata = False,
         
        
         #Shearer days    
-        shearer_days = [(8,'tuesday'),(1,'tuesday')]
+        #shearer_days = [(8,'tuesday'),(1,'tuesday'),(1,'wednesday'),\
+        #                (1,'thursday'), (7,'monday'),(9,'wednesday')]
+            
+        shearer_days = [(1,'wednesday'),\
+                        (7,'monday')]
         
         for shearer_day in shearer_days:
             Q = sfc.SegmentedFeatureCollection(full_metadata_list,shearer=shearer_day[0], day=shearer_day[1],\

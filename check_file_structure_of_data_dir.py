@@ -20,24 +20,24 @@ def find_files(start_dir, prefix):
         for dirname in dirnames:
             if dirname.startswith(prefix):
                 
-                print('dirname: ' + dirname)
-                print(os.path.join(dirpath))
+                #print('dirname: ' + dirname)
+                #print(os.path.join(dirpath))
                 
                 new_dirname = dirname.replace('week4_shearer10','s10_week4_thursday')
                 new_dirname = new_dirname.replace('week4_shearer11_friday','s11_week4_friday')
                 
-                print('rename ' + dirname + ' with ' + new_dirname)
+                #print('rename ' + dirname + ' with ' + new_dirname)
                 
-                #os.rename(os.path.join(basedir, fn),
-            #os.path.join(basedir, surname + ', ' + firstname))
+                os.rename(os.path.join(dirpath, dirname),   os.path.join(dirpath,new_dirname))
+            
                 
                 
                       
-        
+    for dirpath, dirnames, filenames in os.walk(start_dir):        
         for filename in filenames:
             if filename.startswith(prefix):
                 
-                print(os.path.join(dirpath, filename))
+                #print(os.path.join(dirpath, filename))
                 
                 #Chain the replacements only one can do anything
                 new_filename = filename.replace('week4_shearer10','s10_week4_thursday')
@@ -46,13 +46,13 @@ def find_files(start_dir, prefix):
                 
                 print('rename ' + filename + ' with ' + new_filename)
 
-
+                os.rename(os.path.join(dirpath, filename),   os.path.join(dirpath,new_filename))
 #s10_week4_thursday_run1_part1
 
 #week4_shearer10_run1_part1_emg
 
 if __name__ == '__main__':
     
-    test_dir = 'NEW_DIR_TEST'
+    test_dir = 'D:\Data_for_up\Week 4\s11_week4_friday_NEWTEST - Copy'
     
-    find_files(GBL_PATH_TO_DATA, 'week')
+    find_files(test_dir, 'week')
