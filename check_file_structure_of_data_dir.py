@@ -26,10 +26,13 @@ def find_files(start_dir, prefix):
                 new_dirname = dirname.replace('week4_shearer10','s10_week4_thursday')
                 new_dirname = new_dirname.replace('week4_shearer11_friday','s11_week4_friday')
                 
-                #print('rename ' + dirname + ' with ' + new_dirname)
-                
-                os.rename(os.path.join(dirpath, dirname),   os.path.join(dirpath,new_dirname))
-            
+                if GBL_DEBUG == 1:
+                    print('rename ' + dirname + ' with ' + new_dirname)
+                try:
+                    os.rename(os.path.join(dirpath, dirname),   os.path.join(dirpath,new_dirname))
+                except FileExistsError:
+                    pass
+                    
                 
                 
                       
@@ -44,9 +47,13 @@ def find_files(start_dir, prefix):
                 new_filename = new_filename.replace('week4_shearer11_friday','s11_week4_friday')
                 
                 
-                print('rename ' + filename + ' with ' + new_filename)
-
-                os.rename(os.path.join(dirpath, filename),   os.path.join(dirpath,new_filename))
+                if GBL_DEBUG == 1:
+                    print('rename ' + filename + ' with ' + new_filename)
+                
+                try:
+                    os.rename(os.path.join(dirpath, filename),   os.path.join(dirpath,new_filename))
+                except FileExistsError:
+                    pass
 #s10_week4_thursday_run1_part1
 
 #week4_shearer10_run1_part1_emg
