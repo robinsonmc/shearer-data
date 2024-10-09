@@ -16,8 +16,8 @@ will generate the plots in the paper from the stored features
 ## 3b. Run from raw data
 You can easily modify Run.py to call the get_the_feature_plots function with the following
 flags set True:
-    - extract_metadata
-    - segment_and_extract_features
+* extract_metadata
+* segment_and_extract_features
     
 If all the flags are set true, this will run everything on the raw data.
 There is probably little need to re-extract the metadata unless new data is added,
@@ -27,6 +27,7 @@ features.
 
 ## Example output
 ![example_output](https://github.com/user-attachments/assets/6eb72d5a-96ba-46de-ac2c-6a83f7f4f874)
+
 Executing Run.py should produce this figure.
 
 
