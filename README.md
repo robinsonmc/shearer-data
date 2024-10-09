@@ -6,7 +6,7 @@ the data is, and (b) optionally a directory for the extracted features
 if running with the segment_and_extract_features arg set true.
 
 ## 2. Make sure all packages are installed
-See the environment.yml file.
+See the environment.yml file and [instructions](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file).
 
 ## 3a. Run from saved feature list
 If you run Run.py it will call get_the_feature_plots with default args which
