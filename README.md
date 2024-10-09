@@ -1,4 +1,4 @@
-# shearer-data
+# How to use
 
 ## Set the correct paths
 Edit the config.py file with the right paths, (a) to the root directory where 
