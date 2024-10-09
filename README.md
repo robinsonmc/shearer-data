@@ -35,4 +35,4 @@ Executing Run.py should produce this figure.
 The code can be changed to extract or investigate other features. A full list
 of saved features is in ALL_FEATURES_LIST.py, and the functions to extract
 features can be added/modified in get_feature_functions.py and can be called in
-extract_from_reaw_data.py
+extract_from_raw_data.py
