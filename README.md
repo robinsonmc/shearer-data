@@ -23,7 +23,7 @@ If all the flags are set true, this will run everything on the raw data.
 There is probably little need to re-extract the metadata unless new data is added,
 but it  may be useful to re-segment and re-extract features as this can be used to 
 validate the dataset. This code could be further modified to extract new or altered
-features.
+features or different methods of segmentation.
 
 ## Example output
 ![example_output](https://github.com/user-attachments/assets/6eb72d5a-96ba-46de-ac2c-6a83f7f4f874)
