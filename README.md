@@ -14,7 +14,7 @@ will generate the plots in the paper from the features previously extracted and 
 in ./new_saved_features_11_subjects.
 
 ## 3b. Run from raw data
-You can easily modify Run.py to call the get_the_feature_plots function with the following
+You can optionally modify Run.py to call the get_the_feature_plots function with the following
 flags set True:
 * extract_metadata
 * segment_and_extract_features
