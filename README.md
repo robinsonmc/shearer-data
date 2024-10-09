@@ -10,8 +10,8 @@ See the environment.yml file.
 
 ## 3a. Run from saved feature list
 If you run Run.py it will call get_the_feature_plots with default args which
-will generate the plots in the paper from the stored features 
-(in ./new_saved_features_11_subjects).
+will generate the plots in the paper from the features previously extracted and stored
+in ./new_saved_features_11_subjects.
 
 ## 3b. Run from raw data
 You can easily modify Run.py to call the get_the_feature_plots function with the following
