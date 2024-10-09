@@ -14,16 +14,16 @@ will generate the plots in the paper from the stored features
 (in ./new_saved_features_11_subjects).
 
 ## Run from raw data
-To generate the plots from the raw data (not using the saved extracted 
-features) you can call the get_the_feature_plots function with the following
+You can easily modify Run.py to call the get_the_feature_plots function with the following
 flags set True:
     - extract_metadata
     - segment_and_extract_features
     
 If all the flags are set true, this will run everything on the raw data.
-There is probably little need to re-extract the metadata, but it  may be useful
-to re-segment and re-extract features as this can be used to validate the dataset
-and this code could be modified to extract new features.
+There is probably little need to re-extract the metadata unless new data is added,
+but it  may be useful to re-segment and re-extract features as this can be used to 
+validate the dataset. This code could be further modified to extract new or altered
+features.
 
 ## Example output
 ![example_output](https://github.com/user-attachments/assets/6eb72d5a-96ba-46de-ac2c-6a83f7f4f874)
