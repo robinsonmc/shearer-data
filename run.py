@@ -9,7 +9,6 @@ Run this to get example plots
 
 import extract_from_raw_data as efrd
 from config import GBL_PATH_TO_DATA
-import check_file_structure_of_data_dir as cfsdd
 
 if __name__ == '__main__':
     '''
@@ -25,8 +24,8 @@ if __name__ == '__main__':
     Note: this will take a lot longer to run
     '''
     
-    cfsdd.find_files(GBL_PATH_TO_DATA, 'week')
+    
     
     efrd.get_the_feature_plots(extract_metadata = False, 
-                          segment_and_extract_features = True,
+                          segment_and_extract_features = False,
                           data_path=GBL_PATH_TO_DATA)

@@ -12,6 +12,7 @@ import get_all_metadata as gam
 import segmented_feature_collection as sfc
 from pathlib import Path
 from meta_data import MetaData
+import check_file_structure_of_data_dir as cfsdd
 import pathlib
 import plot_article_figures as paf
 from get_feature_functions import col_average, col_std,\
@@ -33,6 +34,11 @@ def get_the_feature_plots(extract_metadata = False,
                           segment_and_extract_features = False,
                           data_path=GBL_PATH_TO_DATA):
     
+    
+    
+    
+    if segment_and_extract_features:
+        cfsdd.find_files(GBL_PATH_TO_DATA, 'week')
     
     if extract_metadata:
     
