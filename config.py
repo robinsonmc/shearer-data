@@ -9,7 +9,7 @@ Created on Thu Sep 19 19:12:52 2024
 GBL_DEBUG = 0
 
 #Path to the downloaded data:
-GBL_PATH_TO_DATA = "D:\Data_for_up"
+GBL_PATH_TO_DATA = "D:\Data"
 
 #Path to a set of features extracted for previous analysis that can be loaded
 #if the segment_and_extract_features flag is set to false.
