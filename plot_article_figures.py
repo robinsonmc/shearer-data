@@ -33,8 +33,6 @@ def plot_figures(dirPath='new_saved_features_11_subjects'):
                'axes.labelsize': 10,
                'font.size': 10 } # extend as needed
     matplotlib.rcParams.update(params)
-    plt.rcParams["font.family"] = "Times New Roman"
-    hfont = {'fontname':'Times New Roman Regular'}
     
     matplotlib.rcParams['pdf.fonttype'] = 42
     matplotlib.rcParams['ps.fonttype'] = 42
