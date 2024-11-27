@@ -248,4 +248,4 @@ def plot_figures(dirPath='new_saved_features_11_subjects'):
     #If want to save figures...    
     #fig.savefig("", format = 'pdf')
        
-    
+    matplotlib.pyplot.show()
