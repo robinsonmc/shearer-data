@@ -23,6 +23,8 @@ import statsmodels.formula.api as smf
 from config import GBL_DEBUG
 import matplotlib
 
+pd.options.mode.chained_assignment = None
+
 def plot_figures(dirPath='new_saved_features_11_subjects'):
     '''
     
