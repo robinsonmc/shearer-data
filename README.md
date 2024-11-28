@@ -37,7 +37,8 @@ features or different methods of segmentation.
 ## Example output
 ![example_output](https://github.com/user-attachments/assets/6eb72d5a-96ba-46de-ac2c-6a83f7f4f874)
 
-Executing Run.py should produce this figure.
+Executing Run.py should produce this figure. If it doesn't automatically show, it will also be saved 
+to pdf in the working directory as "example_figure.pdf".
 
 
 ## Investigating other features
