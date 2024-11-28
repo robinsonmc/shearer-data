@@ -246,6 +246,6 @@ def plot_figures(dirPath='new_saved_features_11_subjects'):
     
     fig.tight_layout()
     #If want to save figures...    
-    #fig.savefig("", format = 'pdf')
+    fig.savefig("example_figure.pdf", format = 'pdf')
        
-    matplotlib.pyplot.show()
+    #matplotlib.pyplot.show()
