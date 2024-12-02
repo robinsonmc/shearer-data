@@ -3,7 +3,7 @@
 ## 1. Download the data
 You can access the data from figshare here:
 [Robinson, M., Bacek, T., Tan, Y., Oetomo, D. & Manzie, C. A lower-back focussed motion capture and electromyography 
-dataset of australian sheep shearers at work](https://figshare.com/s/c01b0ee5daf77ec9f6f7) 
+dataset of australian sheep shearers at work](https://figshare.com/s/dce9e7a046e44b7499bf)
 
 Download all the available data, and extract so that your data directory contains a folder for each of the 4 weeks of data collection as below:
 
